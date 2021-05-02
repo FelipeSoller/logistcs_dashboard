@@ -2,7 +2,8 @@
 import { Bar, Line } from "vue-chartjs";
 
 export default {
-  extends: Bar, Line,
+  extends: Bar,
+  Line,
   props: {
     label: {
       type: String,
@@ -18,6 +19,7 @@ export default {
     const date = this.chartData.map((d) => d.date);
     const traveledKm = this.chartData.map((d) => d.traveledKm);
     const averageTraveld = this.chartData.map((d) => d.averageTraveld);
+    const finesTotalAmount = this.chartData.map((d) => d.finesTotalAmount);
 
     this.renderChart(
       {
@@ -26,6 +28,7 @@ export default {
           {
             label: "Quilômetros rodados totais por dia",
             data: traveledKm,
+            finesTotalAmount,
             backgroundColor: [
               "rgba(255, 0, 0, 0.2)",
               "rgba(255, 128, 0, 0.2)",
@@ -60,13 +63,23 @@ export default {
               "rgb(255, 0, 64)",
               "rgb(255, 0, 0)",
             ],
-            barThickness: 40
+            barThickness: 40,
           },
           {
             label: "Média de quilômetros rodados totais no dia",
             type: "line",
             data: averageTraveld,
-          }
+            fill: false,
+          },
+          {
+            label: "Valor de Multas por dia",
+            type: "line",
+            data: finesTotalAmount,
+            borderColor: "rgb(255, 0, 0)",
+            backgroundColor: "rgb(255, 0, 0)",
+            fill: false,
+            borderDash: [5, 5],         
+          },
         ],
       },
       this.options
